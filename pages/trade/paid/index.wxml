@@ -1,0 +1,39 @@
+<import src="/templates/copyright.wxml" />
+
+<view wx:if="{{ !fetching }}" class="container container--with-copyright">
+  <view class="paid--success__panel zui-panel">
+    <view class="paid--success__logo">
+      <icon wx:if="{{ success }}" type="success" color="#09bb07" size="60"/>
+      <icon wx:else type="waiting" color="#f90" size="60"/>
+      <view class="paid--success__tips zui-c-gray-darker">
+        {{ success ? '支付成功' : '支付结果等待中' }}
+      </view>
+      <view class="paid--success__price zui-c-red">￥{{ data.realPayStr }}</view>
+    </view>
+
+    <view class="zui-cell zui-cell--last-child">
+      <view class="zui-cell__bd zui-c-gray-darker">
+        支付方式
+      </view>
+      <view class="zui-cell__ft zui-c-black">
+        {{ data.buyWayStr }}
+      </view>
+    </view>
+
+    <view wx:if="{{ false }}" class="zui-cell zui-cell--last-child">
+      <view class="zui-cell__bd zui-c-gray-darker">
+        优惠券奖励
+      </view>
+      <view class="zui-cell__ft zui-c-black">
+        获得一张满减送优惠券
+      </view>
+    </view>
+  </view>
+
+  <view class="zui-btns">
+    <button wx:if="{{ success }}" class="zui-btn zui-btn--last-child" catchtap="gotoOrderResult">查看订单详情</button>
+    <button wx:else class="zui-btn zui-btn--last-child" catchtap="fetchOrderData">刷新</button>
+  </view>
+</view>
+
+<template is="copyright" />

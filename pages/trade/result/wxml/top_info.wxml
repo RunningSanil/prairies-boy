@@ -1,0 +1,64 @@
+<import src="/bower_components/zui/dist/steps/index.wxml"/>
+
+<template name="top_info">
+  <view class="top-info zui-panel {{ order.isVirtual ? 'top-info--has-border-bottom' : '' }}">
+    <view class="top-info__hd zui-cell {{ order.isVirtual && !express.isShow ? 'zui-cell--last-child' : '' }}">
+      <view class="zui-cell__bd">
+        <view class="top-info__status">
+          <view class="top-info__icon top-info__icon--{{ order.state }}"></view>
+          <view class="top-info__desc">
+            <view class="zui-font-14 zui-c-black">
+              {{ order.state_str }}
+              <block wx:if="{{ order.close_state }}">
+                ({{ order.close_state_str }})
+              </block>
+            </view>
+            <view wx:if="{{ false && order.state == 'send' }}" class="zui-font-12 zui-c-gray-dark">7天后，订单将自动确认</view>
+          </view>
+        </view>
+
+        <!-- steps -->
+        <block wx:if="{{ order.steps.length > 0 }}">
+          <template is="zui-steps" data="{{ type: 'horizon', steps: order.steps, className: 'top-info__steps' }}"></template>
+        </block>
+
+      </view>
+
+    </view>
+
+    <view
+      wx:if="{{ express.isShow }}"
+      class="top-info__express zui-cell {{ express.data.trace_list.length > 0 ? 'zui-cell--access' : '' }} {{ order.isVirtual ? 'zui-cell--last-child' : '' }}"
+      catchtap="showExpressPage"
+    >
+      <view class="zui-cell__bd zui-font-12">
+        <view class="zui-c-red">
+          {{ express.data.company_name }}
+          运单编号:{{ express.data.out_sid }}
+        </view>
+        <view class="top-info__express-desc zui-c-gray-darker">
+          <block wx:if="{{ express.data.trace_list.length > 0 }}">
+            <view>{{ express.data.trace_list[0].status_desc }}</view>
+            <view>{{ express.data.trace_list[0].status_time }}</view>
+          </block>
+          <block wx:else>
+            暂无物流信息
+          </block>
+        </view>
+      </view>
+      <view class="zui-cell__ft"></view>
+    </view>
+
+    <view wx:if="{{ !order.isVirtual }}" class="order-address order-address--has">
+      <view class="order-address__title">
+        <view class="zui-pull-right">{{ order.tel }}</view>
+        <view class="order-address__uname zui-ellipsis">收货人：{{ order.user_name }}</view>
+      </view>
+      <view class="order-address__desc zui-font-12 zui-c-gray-darker">
+        收货地址：{{ order.province }}{{ order.city }}{{ order.county }}{{ order.address_detail }}
+      </view>
+      <view class="order-address__border"></view>
+    </view>
+
+  </view>
+</template>

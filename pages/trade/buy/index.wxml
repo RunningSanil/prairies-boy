@@ -1,0 +1,55 @@
+<import src="wxml/top_info.wxml"/>
+<import src="wxml/shop.wxml"/>
+<import src="wxml/coupon.wxml"/>
+<import src="wxml/sms.wxml"/>
+<import src="wxml/order_total.wxml"/>
+<import src="wxml/order_pay.wxml"/>
+<import src="wxml/unavailable_goods.wxml"/>
+<import src="/bower_components/zui/dist/toast/index.wxml"/>
+<import src="/templates/copyright.wxml" />
+
+<view
+  class="container container--with-copyright"
+>
+  <view wx:if="{{ !fetching }}" class="order-container zui-font-14">
+    <!-- address -->
+    <template is="top_info" data="{{ address, order_no, is_virtual, showCountDown, countdown }}"/>
+
+    <!-- goods-list -->
+    <template is="shop" data="{{ goods_list, shop, order_no, is_virtual }}"/>
+
+    <!-- 优惠券 -->
+    <template wx:if="{{ goods_list.length !== 0 }}" is="coupon" data="{{ coupons, order_no }}"/>
+
+    <!-- 短信通知收件人 -->
+    <template wx:if="{{ goods_list.length !== 0 }}" is="sms" data="{{ sms, order_no }}"/>
+
+    <!-- 计价区域 -->
+    <template wx:if="{{ goods_list.length !== 0 }}" is="order_total" data="{{ payment, payment_strs, coupons }}"/>
+
+    <!-- 底部付款条 -->
+    <template
+      wx:if="{{ goods_list.length !== 0 && !(coupons.showCouponList || shop.showActivityDetail || unavailable_goods.showDetail) }}"
+      is="order_pay"
+      data="{{ order_no, payment_strs }}"
+    />
+
+    <!-- 不可购买的商品展示 -->
+    <template
+      wx:if="{{ unavailable_goods.list.length !== 0 }}"
+      is="unavailable_goods"
+      data="{{ unavailable_goods }}"
+    />
+
+    <!-- 订单享受xxx的条条 -->
+    <view class="zui-center order-tip zui-font-12 zui-c-gray-dark">
+      <text>本订单享受 </text>
+      <image class="order-tip__img" src="https://img.yzcdn.cn/public_files/2016/01/05/f32fc608cf4173bffa3c23b0ad682bf9.png" mode="aspectFit">
+      </image>
+      <text> 保险保障</text>
+    </view>
+  </view>
+</view>
+
+<template is="zui-toast" data="{{ zuiToast }}" />
+<template wx:if="{{ !fetching }}" is="copyright" />

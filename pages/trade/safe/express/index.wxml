@@ -1,0 +1,87 @@
+<import src="/templates/copyright.wxml" />
+<import src="/bower_components/zui/dist/toast/index.wxml"/>
+
+<view class="container container--with-copyright">
+
+  <view class="zui-panel zui-panel--without-margin-top">
+    <view class="zui-cell zui-form__item">
+      <view class="zui-form__title">
+        物流公司
+      </view>
+      <view class="zui-form__input zui-cell__bd">
+        <picker mode="selector" value="{{ expressIndex }}" range="{{ express }}" range-key="text" bindchange="bindExpressChange">
+          <view class="">{{ express[expressIndex].text }}</view>
+        </picker>
+      </view>
+      <view class="zui-arrow"></view>
+    </view>
+
+    <view class="zui-cell zui-form__item">
+      <view class="zui-form__title">
+        物流单号
+      </view>
+      <view class="zui-form__input zui-cell__bd">
+        <input
+          type="text"
+          placeholder="请输入物流单号"
+          bindblur="onExpressNoChange"
+          value="{{ express_no }}"
+        />
+      </view>
+    </view>
+
+    <view class="zui-cell zui-form__item">
+      <view class="zui-form__title">
+        手机号码
+      </view>
+      <view class="zui-form__input zui-cell__bd">
+        <input type="number" maxlength="20" placeholder="填写手机号便于卖家联系您" bindblur="onPhoneChange" value="{{ phone }}" />
+      </view>
+    </view>
+
+    <view class="zui-cell zui-form__item">
+      <view class="zui-form__title--top zui-form__title">
+        备注信息
+      </view>
+      <view class="zui-cell__bd zui-form__textarea">
+        <textarea auto-height maxlength="200" placeholder="最多可填写200字" bindblur="onMessageChange" value="{{ message }}"/>
+      </view>
+    </view>
+
+    <view class="zui-cell zui-form__item zui-cell--last-child">
+      <view class="multi-upload__title zui-form__title">
+        图片举证
+      </view>
+      <view class="zui-cell__bd zui-form__input">
+        <view wx:if="{{ imgs.length == 0 }}" class="zui-c-gray-dark">可上传{{ MAX_PICTURES }}张图片</view>
+        <view wx:else class="zui-c-gray-dark">还能上传{{ MAX_PICTURES - imgs.length }}张图片</view>
+        <view>
+          <view
+            wx:for="{{ imgs }}" wx:key="key" wx:for-item="imgData"
+            class="multi-upload__img-contain {{ imgData.uploading ? 'multi-upload__img-contain--loading' : '' }}"
+          >
+            <image class="multi-upload__img" src="{{ imgData.srcPreview }}" mode="aspectFit"></image>
+            <icon
+              class="multi-upload__clear"
+              data-key="{{ imgData.key }}"
+              type="clear" size="16" color="black"
+              catchtap="onImageDelete"
+            />
+          </view>
+
+          <view wx:if="{{ imgs.length < MAX_PICTURES }}" class="multi-upload__img-contain multi-upload__img-add" catchtap="onImageAdd">
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="zui-btns">
+    <button class="zui-btn zui-btn--danger" catchtap="onSubmitClick">提交</button>
+  </view>
+
+</view>
+
+<template is="zui-toast" data="{{ zuiToast }}" />
+<template is="copyright" />

@@ -1,0 +1,31 @@
+<template name="order-total">
+  <view class="zui-panel order-total">
+    <view class="zui-cell order-total__cell">
+      <view class="zui-cell__bd">
+        <view>
+          <text>商品金额</text>
+          <text class="zui-pull-right zui-c-gray-darker">¥ {{ order.totalPriceStr }}</text>
+        </view>
+        <view>
+          <text>运费</text>
+          <text class="zui-pull-right zui-c-gray-darker">+ ¥ {{ order.postage }}</text>
+        </view>
+        <view wx:if="{{ order.reduceData.id }}">
+          <text>{{ order.reduceData.name }}</text>
+          <text class="zui-pull-right zui-c-gray-darker">- ¥ {{ order.reduceData.discountFee }}</text>
+        </view>
+        <view wx:if="{{ order.couponData.id }}">
+          <text>优惠</text>
+          <text class="zui-pull-right zui-c-gray-darker">- ¥ {{ order.couponData.discountFee }}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="zui-cell zui-cell--last-child order-total__cell">
+      <view class="zui-cell__bd">
+        <text>实付金额</text>
+        <text class="zui-pull-right zui-c-red">¥ {{ order.real_pay }}</text>
+      </view>
+    </view>
+  </view>
+</template>

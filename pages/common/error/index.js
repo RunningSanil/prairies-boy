@@ -1,0 +1,1 @@
+var app=getApp();Page({data:{text:'',code:0},onLoad(a){var b=app.db.get(a.dbid)||{};this.setData({text:b.text||'\u54CE\u5440\uFF0C\u51FA\u9519\u4E86',code:b.code||0})},onShow(){this.isShowed&&wx.switchTab({url:'/pages/home/dashboard/index'}),this.isShowed=!0}});

@@ -1,0 +1,20 @@
+<import src="wxml/list.wxml"/>
+<import src="wxml/edit.wxml"/>
+<import src="/bower_components/zui/dist/toast/index.wxml"/>
+
+<view class="container">
+  <view class="address zui-c-black">
+    <block wx:if="{{ !fetching }}">
+
+      <block wx:if="{{ status == 'list' }}">
+        <template is="list" data="{{ list, selected }}"/>
+      </block>
+      <block wx:else>
+        <template is="edit" data="{{ status, edit_data, area }}"/>
+      </block>
+
+    </block>
+  </view>
+</view>
+
+<template is="zui-toast" data="{{ zuiToast }}" />

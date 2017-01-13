@@ -1,0 +1,19 @@
+<import src="/templates/copyright.wxml" />
+<import src="/bower_components/zui/dist/toast/index.wxml"/>
+
+<import src="wxml/top.wxml"/>
+<import src="wxml/info.wxml"/>
+<import src="wxml/btns.wxml"/>
+
+<view class="container container--with-copyright">
+  <block wx:if="{{ !fetching }}">
+    <template is="top" data="{{ type, safe, refund_process, countdown, countdownStr }}"/>
+
+    <template is="safe-info" data="{{ type, tab, safe, safe_no, log, goods }}"/>
+
+    <template is="btns" data="{{ btns, messageDialog, youzanDialog, MAX_PICTURES, selectedId: tab.selectedId }}"/>
+  </block>
+</view>
+
+<template is="zui-toast" data="{{ zuiToast }}" />
+<template is="copyright" />

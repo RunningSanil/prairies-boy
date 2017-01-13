@@ -1,0 +1,118 @@
+<template name="btns">
+  <view class="zui-btns">
+    <block wx:for="{{ btns }}" wx:for-item="btnType" wx:key="unique">
+      <button wx:if="{{ btnType == 'modify' }}" class="zui-btn zui-btn--danger" catchtap="modifySafe">修改退款申请</button>
+      <button wx:if="{{ btnType == 'close' }}" class="zui-btn" catchtap="closeSafe">撤销退款申请</button>
+      <button wx:if="{{ btnType == 'youzan' }}" class="zui-btn" catchtap="showYouzanDialog">申请有赞客服介入</button>
+      <button wx:if="{{ btnType == 'order' }}" class="zui-btn" catchtap="backToOrder">查看订单详情</button>
+    </block>
+    <button wx:if="{{ selectedId == 2 }}" class="zui-btn" catchtap="showMessageDialog">我要留言</button>
+  </view>
+
+  <template is="message-dialog" data="{{ messageDialog, MAX_PICTURES }}"></template>
+  <template is="youzan-dialog" data="{{ youzanDialog, MAX_PICTURES }}"></template>
+</template>
+
+<template name="message-dialog">
+  <view class="order-dialog zui-dialog {{ messageDialog.show ? 'zui-dialog--show' : '' }}">
+    <view class="zui-dialog__mask" catchtap="hideMessageDialog"></view>
+    <view class="zui-dialog__container">
+      <view class="order-dialog__header zui-dialog__header">
+        <text>我要留言</text>
+      </view>
+      <view class="order-dialog__content">
+        <view class="zui-cell zui-form__item">
+          <view class="zui-form__title">
+            留言信息
+          </view>
+          <view class="zui-form__input zui-cell__bd">
+            <input type="text" placeholder="请尽可能详细地提交留言信息" bindblur="onMessageDialogTextChange" value="{{ messageDialog.message }}" />
+          </view>
+        </view>
+        <view class="zui-cell zui-form__item zui-cell--last-child">
+          <view class="multi-upload__title zui-form__title">图片信息</view>
+          <view class="zui-form__input zui-cell__bd">
+            <view wx:if="{{ messageDialog.imgs.length == 0 }}" class="zui-c-gray-dark">可上传{{ MAX_PICTURES }}张图片</view>
+            <view wx:else class="zui-c-gray-dark">还能上传{{ MAX_PICTURES - messageDialog.imgs.length }}张图片</view>
+            <view>
+              <view
+                wx:for="{{ messageDialog.imgs }}" wx:key="key" wx:for-item="imgData"
+                class="multi-upload__img-contain {{ imgData.uploading ? 'multi-upload__img-contain--loading' : '' }}"
+              >
+                <image class="multi-upload__img" src="{{ imgData.srcPreview }}" mode="aspectFit"></image>
+                <icon
+                  class="multi-upload__clear"
+                  data-key="{{ imgData.key }}"
+                  type="clear" size="16" color="black"
+                  catchtap="onMessageImageDelete"
+                />
+              </view>
+
+              <view
+                wx:if="{{ messageDialog.imgs.length < MAX_PICTURES }}"
+                class="multi-upload__img-contain multi-upload__img-add"
+                catchtap="chooseMessageImages"
+              ></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="order-dialog__action">
+        <button class="order-dialog__action-btn zui-btn zui-btn--last-child" catchtap="hideMessageDialog">取消</button>
+        <button class="order-dialog__action-btn zui-btn zui-btn--danger zui-btn--last-child" catchtap="submitMessageDialog">提交</button>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="youzan-dialog">
+  <view class="order-dialog zui-dialog {{ youzanDialog.show ? 'zui-dialog--show' : '' }}">
+    <view class="zui-dialog__mask" catchtap="hideYouzanDialog"></view>
+    <view class="zui-dialog__container">
+      <view class="order-dialog__header zui-dialog__header">
+        <text>申请有赞客服介入</text>
+      </view>
+      <view class="order-dialog__content">
+        <view class="zui-cell zui-form__item">
+          <view class="zui-form__title">
+            维权理由
+          </view>
+          <view class="zui-form__input zui-cell__bd">
+            <input type="text" placeholder="有赞客服将尽快为您处理" bindblur="onYouzanDialogTextChange" value="{{ youzanDialog.message }}" />
+          </view>
+        </view>
+        <view class="zui-cell zui-form__item zui-cell--last-child">
+          <view class="multi-upload__title zui-form__title">图片举证</view>
+          <view class="zui-form__input zui-cell__bd">
+            <view wx:if="{{ youzanDialog.imgs.length == 0 }}" class="zui-c-gray-dark">可上传{{ MAX_PICTURES }}张图片</view>
+            <view wx:else class="zui-c-gray-dark">还能上传{{ MAX_PICTURES - youzanDialog.imgs.length }}张图片</view>
+            <view>
+              <view
+                wx:for="{{ youzanDialog.imgs }}" wx:key="key" wx:for-item="imgData"
+                class="multi-upload__img-contain {{ imgData.uploading ? 'multi-upload__img-contain--loading' : '' }}"
+              >
+                <image class="multi-upload__img" src="{{ imgData.srcPreview }}" mode="aspectFit"></image>
+                <icon
+                  class="multi-upload__clear"
+                  data-key="{{ imgData.key }}"
+                  type="clear" size="16" color="black"
+                  catchtap="onYouzanImageDelete"
+                />
+              </view>
+
+              <view
+                wx:if="{{ youzanDialog.imgs.length < MAX_PICTURES }}"
+                class="multi-upload__img-contain multi-upload__img-add"
+                catchtap="chooseYouzanImages"
+              ></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="order-dialog__action">
+        <button class="order-dialog__action-btn zui-btn zui-btn--last-child" catchtap="hideYouzanDialog">取消</button>
+        <button class="order-dialog__action-btn zui-btn zui-btn--danger zui-btn--last-child" catchtap="submitYouzanDialog">提交</button>
+      </view>
+    </view>
+  </view>
+</template>

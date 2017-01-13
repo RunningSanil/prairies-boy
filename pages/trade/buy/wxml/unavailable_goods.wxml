@@ -1,0 +1,64 @@
+<template name="unavailable_goods">
+  <view class="unavailable__tips">以下商品无法一起购买</view>
+  <view class="unavailable__panel zui-panel" catchtap="showUnavailableDetail">
+    <image
+      wx:for="{{ unavailable_goods.list }}"
+      wx:key="index"
+      wx:item="item"
+      mode="aspectFit"
+      src="{{ item.imgUrl }}"
+      class="unavailable__image"
+      ></image>
+
+    <view class="unavailable__action">共一件</view>
+  </view>
+
+
+  <view class="zui-dialog {{ unavailable_goods.showDetail ? 'zui-dialog--show' : ''}} order-dialog">
+    <view class="zui-dialog__mask" catchtap="hideUnavailableDetail"></view>
+    <view class="zui-dialog__container">
+      <view class="zui-dialog__header order-dialog__header">
+        <text>以下商品无法一起下单</text>
+      </view>
+      <view class="order-dialog__content">
+        <view class="unavailable-dialog__list">
+
+          <block wx:for="{{ unavailable_goods.list }}" wx:for-item="item" wx:key="index">
+            <view class="goods-card zui-card {{index == 0 ? 'goods-card--first' : ''}}">
+              <view class="zui-card__thumb">
+                <image class="zui-card__img" src="{{ item.imgUrl }}" mode="aspectFit"></image>
+                <view class="unavailable-dialog__tag">失效</view>
+              </view>
+              <view class="zui-card__detail">
+                <view class="zui-card__detail-row zui-c-gray-dark">
+                  <view class="zui-card__right-col">
+                    ￥{{ item.priceStr }}
+                  </view>
+                  <view class="zui-card__left-col zui-ellipsis--l2">
+                    {{ item.title }}
+                  </view>
+                </view>
+
+                <view class="zui-card__detail-row zui-c-gray-dark zui-font-12">
+                  <view class="zui-card__right-col">x{{ item.num }}</view>
+                  <view class="zui-card__left-col goods-card__detail-sku">
+                    {{ item.skuStr }}
+                  </view>
+                </view>
+
+                <view class="zui-card__detail-row">
+                  <view class="zui-card__left-col zui-c-red zui-font-12">
+                    {{ item.unavailableDesc }}
+                  </view>
+                </view>
+
+              </view>
+            </view>
+          </block>
+
+        </view>
+        <button catchtap="hideUnavailableDetail" class="zui-btn zui-btn--danger zui-btn--last-child">关闭</button>
+      </view>
+    </view>
+  </view>
+</template>

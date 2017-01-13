@@ -1,0 +1,38 @@
+<import src="/bower_components/zui/dist/loadmore/index.wxml" />
+<import src="/bower_components/zui/dist/tab/index.wxml" />
+<import src="/bower_components/zui/dist/toast/index.wxml" />
+<import src="/templates/banner.wxml" />
+
+<view class="container container--without-border">
+  <scroll-view
+    scroll-y="true"
+    scroll-into-view="{{ scrollIntoView }}"
+    bindscroll="handleScroll"
+    lower-threshold="600"
+    bindscrolltoupper="handleScrollToUpper"
+    bindscrolltolower="handleScrollToLower"
+    style="height: {{ systemInfo.windowHeight }}px">
+
+    <template is="banner" data="{{ ...banner }}" />
+
+    <view id="tags" hidden="{{ !tags.list.length }}">
+      <template is="zui-tab" data="{{ tab: tags, fixed: fixedGoodsTag }}" />
+    </view>
+
+    <view class="goods-list">
+      <navigator
+        url="/pages/goods/detail/index?alias={{ item.alias }}"
+        wx:for="{{ goods[tags.selectedId].list }}"
+        wx:key="alias"
+        class="goods-item {{ item.sold_status == '2' ? 'goods-item--sold-out' : '' }}">
+        <image class="goods-item__image" mode="aspectFill" src="{{ item.pic_url }}"/>
+        <view class="goods-item__price">¥ {{ item.price }}</view>
+      </navigator>
+    </view>
+
+    <block wx:if="{{ goods[tags.selectedId] }}">
+      <template is="zui-loadmore" data="{{ ...goods[tags.selectedId]  }}" />
+    </block>
+  </scroll-view>
+</view>
+<template is="zui-toast" data="{{ zuiToast }}" />

@@ -1,0 +1,1 @@
+@import "/templates/goods_card/index.wxss";@import "wxss/top_info.wxss";@import "wxss/shop.wxss";.order-total{overflow:hidden;padding:0}.order-total__cell{line-height:26px}.order-info__cell{line-height:22px}.virtual-code__code{padding:0}.virtual-code__image{width:320px;height:320px}

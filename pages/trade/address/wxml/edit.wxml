@@ -1,0 +1,89 @@
+<template name="edit">
+  <view class="address-edit zui-form">
+    <view class="address-edit__item zui-cell zui-form__item">
+      <text class="zui-form__title">收货人</text>
+      <input
+        class="address-edit__input zui-form__input zui-cell__bd"
+        data-type="user_name"
+        bindblur="onInputChange"
+        value="{{ edit_data.user_name || '' }}"
+        placeholder="名字"
+      />
+    </view>
+    <view class="address-edit__item zui-cell zui-form__item">
+      <text class="zui-form__title">联系电话</text>
+      <input
+        class="address-edit__input zui-form__input zui-cell__bd"
+        type="number"
+        maxlength="20"
+        data-type="tel"
+        bindblur="onInputChange"
+        value="{{ edit_data.tel || '' }}"
+        placeholder="手机或固定电话"
+      />
+    </view>
+    <view class="address-edit__item zui-cell zui-form__item">
+      <view class="zui-form__title zui-pull-left">收货地区</view>
+      <view class="zui-form__input address-edit__pickers zui-cell__bd">
+        <picker mode="selector"
+          class="address-edit__picker"
+          range="{{ area.province }}"
+          range-key="text"
+          value="{{ edit_data.provinceIndex }}"
+          data-type="province"
+          bindchange="onAreaChange">
+          <view class="picker">
+            {{ area.province[edit_data.provinceIndex].text }}
+          </view>
+        </picker>
+        <picker mode="selector"
+          class="address-edit__picker"
+          range="{{ area.city }}"
+          range-key="text"
+          value="{{ edit_data.cityIndex }}"
+          data-type="city"
+          bindchange="onAreaChange">
+          <view class="picker">
+            {{ area.city[edit_data.cityIndex].text }}
+          </view>
+        </picker>
+        <picker mode="selector"
+          class="address-edit__picker"
+          range="{{ area.county }}"
+          range-key="text"
+          value="{{ edit_data.countyIndex }}"
+          data-type="county"
+          bindchange="onAreaChange">
+          <view class="picker">
+            {{ area.county[edit_data.countyIndex].text }}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="address-edit__item zui-cell zui-form__item">
+      <text class="zui-form__title">详细地址</text>
+      <input
+        class="address-edit__input zui-form__input zui-cell__bd"
+        data-type="address_detail"
+        bindblur="onInputChange"
+        value="{{ edit_data.address_detail || '' }}"
+        placeholder="街道门牌信息"
+      />
+    </view>
+    <view class="address-edit__item zui-cell zui-form__item zui-cell--last-child">
+      <text class="zui-form__title">邮政编码</text>
+      <input
+        class="address-edit__input zui-form__input zui-cell__bd"
+        data-type="postal_code"
+        bindblur="onInputChange"
+        value="{{ edit_data.postal_code || '' }}"
+        placeholder="邮政编码(选填)"
+      />
+    </view>
+  </view>
+  <view class="zui-btns">
+    <button class="zui-btn zui-btn--primary" catchtap="onAddressSave">保存</button>
+    <button wx:if="{{ status == 'edit' }}" class="zui-btn" catchtap="onAddressDelete">删除收货地址</button>
+    <button class="zui-btn zui-btn--last-child" catchtap="onAddressBack">取消</button>
+  </view>
+</template>

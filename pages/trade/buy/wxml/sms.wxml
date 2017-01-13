@@ -1,0 +1,8 @@
+<template name="sms">
+  <view class="zui-cell zui-panel order-panel zui-cell--last-child sms">
+    <text class="sms__title zui-cell__bd">短信通知收件人</text>
+    <view class="sms__ft zui-cell__ft">
+      <switch class="sms__switch" checked="{{ sms == 1 ? 'checked' : '' }}" bindchange="onSmsChange" />
+    </view>
+  </view>
+</template>

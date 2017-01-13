@@ -1,0 +1,44 @@
+{
+  "pages":[
+    "pages/home/dashboard/index",
+    "pages/usercenter/dashboard/index",
+    "pages/goods/detail/index",
+    "pages/goods/cart/index",
+    "pages/trade/address/index",
+    "pages/trade/express/index",
+    "pages/trade/buy/index",
+    "pages/trade/goods_message/index",
+    "pages/trade/result/index",
+    "pages/trade/paid/index",
+    "pages/trade/safe/apply/index",
+    "pages/trade/safe/info/index",
+    "pages/trade/safe/express/index",
+    "pages/order/list/index",
+    "pages/common/error/index"
+  ],
+  "window":{
+    "navigationBarBackgroundColor": "#FAFAFA",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black",
+    "backgroundTextStyle":"dark",
+    "backgroundColor": "#f9f9f9"
+  },
+  "tabBar": {
+    "color": "#606060",
+    "selectedColor": "#FF4444",
+    "backgroundColor": "#FCFCFC",
+    "borderStyle": "white",
+    "list": [{
+      "pagePath": "pages/home/dashboard/index",
+      "text": "首页",
+      "iconPath": "icons/home.png",
+      "selectedIconPath": "icons/home-selected.png"
+    }, {
+      "pagePath": "pages/usercenter/dashboard/index",
+      "text": "我的",
+      "iconPath": "icons/usercenter.png",
+      "selectedIconPath": "icons/usercenter-selected.png"
+    }]
+  },
+  "debug": false
+}

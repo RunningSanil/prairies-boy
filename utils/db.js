@@ -1,0 +1,1 @@
+var _data={},_id=1;function getId(){return'db_'+_id++}module.exports={set(a){var b=getId();return _data[b]=a,b},get(a){var b=_data[a];return delete _data[a],b}};

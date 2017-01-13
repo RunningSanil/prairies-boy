@@ -1,0 +1,49 @@
+<import src="/templates/copyright.wxml" />
+
+<view wx:if="{{ !fetching }}" class="container container--with-copyright">
+  <view class="express__hd zui-card zui-panel zui-cell zui-cell--last-child">
+    <view class="zui-cell__bd">
+      <view class="express-card__thumb zui-card__thumb">
+        <image class="express-card__img zui-card__img" src="{{ image_url }}" mode="aspectFit"></image>
+      </view>
+      <view class="express-card__detail zui-card__detail">
+        <view class="express-card__title">
+          <text>物流状态: </text>
+          <text class="zui-c-red">{{ express.status }}</text>
+        </view>
+        <view class="zui-c-gray-dark zui-font-12">
+          共{{ goods_count }}件商品，由【{{ express.company_name }}】承运
+        </view>
+        <view class="zui-c-gray-dark zui-font-12">
+          运单编号：{{ express.out_sid }}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="express__bd zui-panel">
+    <view
+      wx:if="{{ express.trace_list.length > 0 }}"
+      wx:for="{{ express.trace_list }}" wx:key="index" wx:for-item="expressItem"
+      class="exp-item zui-cell {{ index == 0 ? 'exp-item--active' : '' }} {{ index + 1 == express.trace_list.length ? 'zui-cell--last-child' : '' }}"
+    >
+      <view class="exp-item__line"></view>
+      <view class="zui-cell__bd">
+        <view class="exp-item__content exp-item__title">
+          <view class="exp-item__icon"></view>
+          <text>{{ expressItem.status_desc }}</text>
+        </view>
+        <view class="exp-item__content zui-font-12">
+          {{ expressItem.status_time }}
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{ express.trace_list.length == 0 }}" class="exp-empty zui-center">
+      暂无物流信息
+    </view>
+  </view>
+
+</view>
+
+<template is="copyright" />

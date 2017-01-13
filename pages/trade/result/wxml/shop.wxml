@@ -1,0 +1,93 @@
+<template name="shop">
+  <view class="shop zui-panel">
+    <view class="shop__shopname zui-c-black">{{ order.items[0]['shop_info']['shop_name'] }}</view>
+
+    <view
+      wx:for="{{ order.items }}"
+      wx:key="index"
+      wx:for-item="item"
+      class="goods-card zui-card goods-card--first"
+    >
+      <view class="zui-card__thumb">
+        <view
+          wx:if="{{ item.is_present != 0 }}"
+          class="goods-card__present-icon"
+        ></view>
+        <image class="zui-card__img" src="{{ item.image_url }}" mode="aspectFit"></image>
+      </view>
+      <view class="zui-card__detail">
+        <view class="zui-card__detail-row">
+          <view class="zui-card__right-col">
+            ￥{{ item.pay_price }}
+          </view>
+          <view class="zui-card__left-col zui-ellipsis--l2">
+            {{ item.title }}
+          </view>
+        </view>
+
+        <view class="zui-card__detail-row zui-c-gray-darker">
+          <view class="zui-card__right-col">x{{ item.num }}</view>
+          <view class="zui-card__left-col goods-card__detail-sku">
+            {{ item.skuStr }}
+          </view>
+        </view>
+
+        <view wx:if="{{ item.message.length != 0 || item.safe.show }}" class="zui-card__detail-row zui-c-gray-darker">
+          <view class="zui-card__right-col">
+            <view
+              wx:if="{{ item.message.length != 0 }}"
+              class="zui-btn zui-btn--mini {{ item.safe.show ? '' : 'zui-btn--last-child' }}"
+              data-goodsid="{{ item.goods_id }}"
+              data-skuid="{{ item.sku_id }}"
+              catchtap="showGoodsMessage"
+            >查看留言</view>
+            <view
+              wx:if="{{ item.safe.show }}"
+              class="zui-btn zui-btn--danger zui-btn--plain zui-btn--mini zui-btn--last-child"
+              style="background: white;"
+              data-itemid="{{ item.item_id }}"
+              data-safeno="{{ item.safe.safe_no }}"
+              catchtap="jumpToSafe"
+            >{{ item.safe.text }}</view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+    <view class="zui-cell order-panel">
+      <text class="zui-cell__bd order-panel__title">配送方式</text>
+      <view class="zui-cell__ft zui-c-gray-darker">
+        <block wx:if="{{ order.isFreePostage }}">
+          <view>免运费</view>
+        </block>
+        <block wx:else>
+          <view>￥{{ order.postage }}</view>
+          <view>快递发货</view>
+        </block>
+      </view>
+    </view>
+
+    <view class="zui-cell order-panel">
+      <view class="zui-cell__hd zui-c-black order-panel__title" style="width: 70px;">买家留言: </view>
+      <view class="zui-cell__bd">
+        {{ order.buyer_msg || '无' }}
+      </view>
+    </view>
+
+    <view class="zui-cell order-panel {{ !servicePhoneNumber ? 'zui-cell--last-child' : '' }}">
+      <text class="zui-cell__bd">合计</text>
+      <view class="zui-cell__ft zui-c-red">
+        <view>￥{{ order.totalPriceStr }}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{ servicePhoneNumber }}" class="zui-cell order-panel zui-cell--last-child zui-center" catchtap="handleContactCustomerService">
+      <view class="zui-cell__bd zui-c-blue shop__im">
+        <image class="shop__im-icon" src="https://img.yzcdn.cn/public_files/2016/12/02/8812ea19818110de677ac215286b3005.png"></image>
+        <text class="shop__im-desc">联系客服</text>
+      </view>
+    </view>
+
+  </view>
+</template>

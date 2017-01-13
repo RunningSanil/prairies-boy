@@ -1,0 +1,51 @@
+<template name="top_info">
+  <view wx:if="{{ !is_virtual || showCountDown }}" class="top-info zui-panel {{ is_virtual ? 'top-info--has-border-bottom' : '' }}">
+    <view wx:if="{{ showCountDown }}" class="top-info__hd zui-cell {{ is_virtual ? 'zui-cell--last-child' : '' }}">
+      <view class="zui-cell__bd">
+        <view class="top-info__status">
+          <view class="top-info__icon top-info__icon--topay"></view>
+          <view class="top-info__desc">
+            <view class="zui-font-14 zui-c-black">等待买家付款</view>
+            <view class="zui-font-12 zui-c-gray-dark">
+              <text>请于 </text>
+              <text wx:if="{{ countdown.day > 0 }}">{{ countdown.day }}天</text>
+              <text wx:if="{{ countdown.hour > 0 }}">{{ countdown.hour }}时</text>
+              <text wx:if="{{ countdown.minute > 0 }}">{{ countdown.minute }}分</text>
+              <text>{{ countdown.second }}秒</text>
+              <text> 内付款，超时订单将自动关闭</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <!-- address -->
+    <template wx:if="{{ !is_virtual }}" is="address" data="{{ address, order_no }}"></template>
+
+  </view>
+</template>
+
+<template name="address">
+  <block wx:if="{{ address.id }}">
+    <view class="order-address order-address--has {{order_no ? '' : 'order-address--edit'}}" bindtap="onAddressTap">
+      <view class="order-address__title">
+        <view class="zui-pull-right">{{ address.tel }}</view>
+        <view class="order-address__uname zui-ellipsis">收货人：{{ address.user_name }}</view>
+      </view>
+      <view class="order-address__desc zui-font-12 zui-c-gray-darker">
+        收货地址：{{ address.province }}{{ address.city }}{{ address.county }} {{ address.address_detail }}
+      </view>
+      <view wx:if="{{!order_no}}" class="zui-arrow"></view>
+      <view class="order-address__border"></view>
+    </view>
+  </block>
+
+  <block wx:if="{{ !address.id }}">
+    <view class="order-address order-address--empty order-address--edit" bindtap="onAddressTap">
+      <view class="order-address__border"></view>
+      <view class="order-address--empty__title zui-c-black">新增收货地址</view>
+      <view class="zui-arrow"></view>
+    </view>
+  </block>
+</template>

@@ -1,0 +1,1 @@
+@import "../../../templates/goods_card/index.wxss";.message{margin-top:0;padding-top:10px;border-top:0 none;font-size:14px}.message__form{border-bottom:0 none}

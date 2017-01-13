@@ -1,0 +1,176 @@
+<import src="/templates/copyright.wxml" />
+<import src="/bower_components/zui/dist/quantity/index.wxml" />
+<import src="/bower_components/zui/dist/toast/index.wxml" />
+
+<view
+  wx:if="{{ fetched }}"
+  class="container container--with-copyright"
+  bindtouchstart="handleContainerTouchStart"
+>
+  <block wx:if="{{ goodsList.length || unavailableGoodsList.length }}">
+    <view
+      wx:if="{{ goodsList.length }}"
+      class="zui-panel zui-panel--without-margin-top"
+    >
+      <view class="cart {{ editMode ? 'cart--edit-model' : '' }}">
+        <view class="cart__hd">
+          <view class="checkbox" bindtap="handleCheckedAllTap">
+            <view wx:if="{{ checkedAll }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #ff4343; font-size: 18px;"></view>
+            <view wx:else class="checkbox-icon zui-icon zui-icon-check" style="color: #999; font-size: 18px;"></view>
+          </view>
+          <view class="shop-name zui-ellipsis">
+            <view class="zui-icon zui-icon-store" style="color: #333;"/>
+            {{ title }}
+          </view>
+          <view class="shop-opt" bindtap="toogleEditMode">
+            {{ editMode ? '完成' : '编辑' }}
+          </view>
+        </view>
+        <view class="cart__bd">
+          <view
+            wx:for="{{ goodsList }}"
+            wx:for-item="goods"
+            wx:key="unique"
+            class="cart__item"
+            data-goods-unique="{{ goods.unique }}"
+            bindtouchstart="handleGoodsTouchStart"
+            bindtouchend="handleGoodsTouchEnd"
+          >
+            <view class="cart__item-bd {{ move.translate && move.unique === goods.unique ? 'cart__item-bd--translate' : '' }}">
+              <view class="checkbox" bindtap="handleCheckedGoodsTap" data-goods-unique="{{ goods.unique }}">
+                <view wx:if="{{ goods.checked }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #ff4343; font-size: 18px;"></view>
+                <view wx:else class="checkbox-icon zui-icon zui-icon-check" style="color: #999; font-size: 18px;"></view>
+              </view>
+              <view class="cart__goods">
+                <view class="zui-card">
+                  <view class="zui-card__thumb">
+                    <image class="zui-card__img" src="{{ goods.attachmentUrl }}" mode="aspectFill" />
+                  </view>
+                  <view class="zui-card__detail">
+                    <view class="goods__quantity-select">
+                      <template is="zui-quantity" data="{{ min: 1, max: goods.maxNum, quantity: goods.num, size: 'small', componentId: goods.unique }}" />
+                    </view>
+                    <view class="goods__title zui-ellipsis--l2">{{ goods.title }}</view>
+                    <view class="goods__sku zui-ellipsis">{{ goods.skuStr }}</view>
+                    <view class="goods__price">¥ {{ goods.payPriceStr }}</view>
+                    <view class="goods__quantity">X{{ goods.num }}</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view
+              class="cart__item-ft"
+              data-is-delete="{{ true }}"
+              data-goods-unique="{{ goods.unique }}"
+              bindtap="handleDeleteSingleGoods"
+            >
+              删除
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{ unavailableGoodsList.length }}">
+      <view class="unavailable-title">以下商品无法一起购买</view>
+      <view class="zui-panel">
+        <view class="cart">
+          <view class="cart__bd" style="padding-top: 10px;">
+            <view
+              wx:for="{{ unavailableGoodsList }}"
+              wx:for-item="goods"
+              wx:key="unique"
+              class="cart__item"
+              data-goods-unique="{{ goods.unique }}"
+              bindtouchstart="handleGoodsTouchStart"
+              bindtouchend="handleGoodsTouchEnd"
+            >
+              <view class="cart__item-bd {{ move.translate && move.unique === goods.unique ? 'cart__item-bd--translate' : '' }}">
+                <view class="cart__goods" style="margin-left: 15px;">
+                  <view class="zui-card">
+                    <view class="zui-card__thumb">
+                      <image class="zui-card__img" src="{{ goods.attachmentUrl }}" mode="aspectFill" />
+                    </view>
+                    <view class="zui-card__detail">
+                      <view class="goods__title zui-ellipsis--l2">{{ goods.title }}</view>
+                      <view class="goods__sku zui-ellipsis">{{ goods.skuStr }}</view>
+                      <view class="goods__error-msg">{{ goods.error_msg }}</view>
+                      <view class="goods__quantity">X{{ goods.num }}</view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view
+                class="cart__item-ft"
+                data-goods-unique="{{ goods.unique }}"
+                data-is-delete="{{ true }}"
+                data-is-unavailable-goods="{{ true }}"
+                bindtap="handleDeleteSingleGoods"
+              >
+                删除
+              </view>
+            </view>
+          </view>
+          <view class="cart__ft clear-unavailable-goods">
+            <button
+              class="zui-btn zui-btn--warn zui-btn--small zui-btn--plain"
+              style="width: 105px;"
+              bindtap="handleClearUnavailableGoods"
+            >
+              清空失效商品
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="bottom-fixed zui-clearfix">
+      <view class="bottom-checked-all zui-clearfix" bindtap="handleCheckedAllTap">
+        <view class="checkbox" style="height: 50px;">
+          <view wx:if="{{ checkedAll }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #ff4343; font-size: 18px;"></view>
+          <view wx:else class="checkbox-icon zui-icon zui-icon-check" style="color: #999; font-size: 18px;"></view>
+        </view>
+        <view class="bottom-checked-all__text">全选</view>
+      </view>
+      <view class="bottom-btn">
+        <block wx:if="{{ editMode }}">
+          <button
+            class="zui-btn zui-btn--large zui-btn--danger {{ !checkedGoodsList.length ? 'zui-btn--disabled' : '' }}"
+            disabled="{{ !checkedGoodsList.length }}"
+            bindtap="handleDeleteMutliGoods"
+          >
+            删除
+          </button>
+        </block>
+        <block wx:else>
+          <button
+            class="zui-btn zui-btn--large zui-btn--danger {{ !checkedGoodsList.length ? 'zui-btn--disabled' : '' }}"
+            disabled="{{ !checkedGoodsList.length }}"
+            bindtap="handleBuy"
+          >
+            结算
+          </button>
+        </block>
+      </view>
+      <view wx:if="{{ !editMode }}" class="bottom-price-info">
+        <view class="{{ totalPrice ? 'zui-c-red' : '' }}">合计：¥ {{ totalPriceStr }} </view>
+        <view>不含运费</view>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="empty-cart">
+      <view class="zui-font-16 zui-c-gray-darker">购物车快饿瘪了 T.T</view>
+      <view class="zui-font-14 zui-c-gray-dark">快给我挑点宝贝</view>
+      <navigator
+        url="/pages/home/dashboard/index"
+        open-type="switchTab"
+        class="zui-btn zui-btn--warn zui-btn--small zui-btn--plain"
+      >
+        去逛逛
+      </navigator>
+    </view>
+  </block>
+</view>
+<view bindtouchstart="handleContainerTouchStart">
+  <template wx:if="{{ fetched }}" is="copyright" />
+</view>
+<template is="zui-toast" />

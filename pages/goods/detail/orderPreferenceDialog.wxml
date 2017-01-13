@@ -1,0 +1,30 @@
+<template name="orderPreferenceDialog">
+  <view class="zui-dialog {{ showOrderPrefernceDialog ? 'zui-dialog--show' : '' }} order-preference-dialog">
+    <view class="zui-dialog__mask" catchtouchmove="catchTouchMove" bindtap="toggleOrderPreferenceDialog">
+    </view>
+    <view class="zui-dialog__container">
+      <view class="order-preference-dialog__title">店铺活动</view>
+      <view
+        wx:if="{{ cashBack }}"
+        class="order-preference-dialog__item">
+        <view class="order-preference-dialog__label">
+          <view class="zui-label zui-label--primary zui-label--small zui-label--plain">返现</view>
+        </view>
+        <view class="order-preference-dialog__desc">
+          {{ cashBack.start_time }}至{{ cashBack.end_time }}期间，
+          在本店前{{ cashBack.cashback_limit }}笔订单支付成功，可随机获得返现
+        </view>
+      </view>
+      <view
+        wx:if="{{ meetReduce && meetReduce.length }}"
+        class="order-preference-dialog__item"
+      >
+        <view class="order-preference-dialog__label">
+          <view class="zui-label zui-label--primary zui-label--small zui-label--plain">满减</view>
+        </view>
+        <view class="order-preference-dialog__desc">{{ meetReduceDesc }}</view>
+      </view>
+      <view class="zui-btn zui-btn--danger zui-btn--large" bindtap="toggleOrderPreferenceDialog">关闭</view>
+    </view>
+  </view>
+</template>

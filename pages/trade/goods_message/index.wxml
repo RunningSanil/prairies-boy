@@ -1,0 +1,53 @@
+<view class="container">
+  <view class="message zui-panel zui-c-black">
+    <view class="goods-card zui-card goods-card--first">
+      <view class="zui-card__thumb">
+        <image class="zui-card__img" src="{{ goods.imgUrl }}" mode="aspectFit"></image>
+      </view>
+      <view class="zui-card__detail">
+        <view class="zui-card__detail-row">
+          <view class="zui-card__right-col">￥{{ goods.payPriceStr }}</view>
+          <view class="zui-card__left-col zui-ellipsis--l2">
+            {{ goods.title }}
+          </view>
+        </view>
+
+        <view class="zui-card__detail-row zui-c-gray-darker">
+          <view class="zui-card__right-col">x{{ goods.num }}</view>
+          <view class="zui-card__left-col goods-card__detail-sku">
+            {{ goods.skuStr }}
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+    <view class="message__form zui-form">
+      <block wx:for="{{ goods.message }}" wx:key="index" wx:item="item">
+        <view class="zui-cell {{ index + 1 == goods.message.length ? 'zui-cell--last-child' : '' }}">
+          <view class="zui-form__title">{{ item.name }}:</view>
+          <view class="zui-cell__bd zui-c-gray-darker">
+            <block wx:if="{{ item.type == 'image'}}">
+              <image
+                src="{{ item.preview }}"
+                mode="scaleToFill"
+                catchtap="previewImg"
+                data-src="{{ item.value }}"
+                style="width: 70px;height: 70px;"
+              />
+            </block>
+            <block wx:else>
+              {{ item.value ? item.value : '无' }}
+            </block>
+          </view>
+        </view>
+      </block>
+    </view>
+
+  </view>
+
+  <!-- 行动按钮 -->
+  <view class="zui-btns">
+    <button class="zui-btn" catchtap="navigateBack">查看订单详情</button>
+  </view>
+</view>

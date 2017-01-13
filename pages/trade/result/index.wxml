@@ -1,0 +1,35 @@
+<import src="wxml/top_info.wxml"/>
+<import src="wxml/shop.wxml"/>
+<import src="wxml/order_total.wxml"/>
+<import src="wxml/virtual_code.wxml"/>
+<import src="/templates/copyright.wxml" />
+<import src="/bower_components/zui/dist/toast/index.wxml"/>
+
+<view wx:if="{{ !fetching }}" class="container container--with-copyright">
+  <block wx:if="{{ !fetching }}">
+    <!-- 最顶上的区块 地址 订单总信息之类的 -->
+    <template is="top_info" data="{{ order, express }}"></template>
+
+    <template wx:if="{{ qrcode.show }}" is="virtual_code" data="{{ order, qrcode }}"></template>
+
+    <!-- shop -->
+    <template is="shop" data="{{ order, servicePhoneNumber }}"></template>
+
+    <!-- 计价版 -->
+    <template is="order-total" data="{{ order }}"></template>
+
+    <!-- 订单信息 -->
+    <view class="order-info zui-panel">
+      <view class="zui-cell order-info__cell zui-cell--last-child">
+        <view class="zui-cell__bd zui-c-gray-dark zui-font-12">
+          <view>订单编号：{{ order.order_no }}</view>
+          <view>创建时间：{{ order.book_time }}</view>
+          <view wx:if="{{ order.pay_time }}">付款时间：{{ order.pay_time }}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<template is="zui-toast" data="{{ zuiToast }}" />
+<template is="copyright" />

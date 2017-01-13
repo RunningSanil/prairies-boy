@@ -1,0 +1,1 @@
+var timer;module.exports={showZuiTopTips(a='',b={}){timer&&(clearTimeout(timer),timer=void 0),'number'==typeof b&&(b={duration:b}),b=Object.assign({duration:3e3},b),this.setData({zuiTopTips:{show:!0,content:a,options:b}}),timer=setTimeout(()=>{this.setData({'zuiTopTips.show':!1}),timer=void 0},b.duration)}};

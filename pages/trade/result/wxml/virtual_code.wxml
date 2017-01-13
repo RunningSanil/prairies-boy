@@ -1,0 +1,17 @@
+<template name="virtual_code">
+  <view class="virtual-code zui-panel">
+    <view class="zui-cell">
+      <view class="zui-cell__bd">
+        <text class="zui-c-gray-dark">订单二维码：</text>
+        <text>{{ order.order_no }}</text>
+      </view>
+    </view>
+    <view class="virtual-code__code zui-cell zui-cell--last-child">
+      <view class="zui-cell__bd">
+        <view class="zui-center">
+          <image class="virtual-code__image zui-center" src="{{ qrcode.image }}" mode="aspectFit"/>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

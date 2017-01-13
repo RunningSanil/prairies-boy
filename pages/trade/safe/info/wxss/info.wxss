@@ -1,0 +1,1 @@
+@import "chat.wxss";.info{padding:12px 15px}.info-goods{padding:15px 0;border-top:1rpx solid #e5e5e5}.info-goods__namecard,.safe-chat{background-color:#fafafa}.safe-chat{overflow:hidden}.safe-chat__time{font-size:10px;margin:15px 0 10px}.safe-panel--no-border-bottom{border-bottom:0 none}

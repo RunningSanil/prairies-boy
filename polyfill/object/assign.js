@@ -1,0 +1,1 @@
+'function'!=typeof Object.assign&&(Object.assign=function(a){'use strict';if(null==a)throw new TypeError('Cannot convert undefined or null to object');a=Object(a);for(var b=1;b<arguments.length;b++){var c=arguments[b];if(null!=c)for(var d in c)Object.prototype.hasOwnProperty.call(c,d)&&(a[d]=c[d])}return a});

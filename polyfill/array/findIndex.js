@@ -1,0 +1,1 @@
+Array.prototype.findIndex||(Array.prototype.findIndex=function(a){if(null===this)throw new TypeError('Array.prototype.findIndex called on null or undefined');if('function'!=typeof a)throw new TypeError('predicate must be a function');var b=Object(this),c=b.length>>>0,d=arguments[1],e;for(var f=0;f<c;f++)if(e=b[f],a.call(d,e,f,b))return f;return-1});

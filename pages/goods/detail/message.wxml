@@ -1,0 +1,81 @@
+<template name="message">
+  <block
+    wx:for="{{ messages }}"
+    wx:for-item="message"
+    wx:key="{{ index }}">
+    <view class="zui-cell zui-form__item {{ messages.length == (index + 1) ? 'zui-cell--last-child' : '' }}">
+      <view class="zui-form__title">
+        <view class="{{ message.required == '1' ? 'message-required' : '' }}">
+          {{ message.name }}：
+        </view>
+        <view wx:if="{{ message.type == 'image' }}" class="zui-c-gray zui-font-12">仅限一张</view>
+      </view>
+      <!-- 图片留言 -->
+      <block wx:if="{{ message.type == 'image' }}">
+        <view>
+          <view wx:if="{{ message.uploading }}" class="select-photo">
+            <view style="margin-right: 0">正在上传...</view>
+          </view>
+          <view wx:else bindtap="handleMessageUploadImageTap" data-index="{{ index }}">
+            <view class="select-photo">
+              <view class="zui-icon zui-icon-camera"/>
+              <view>{{ message.value ? '重拍' : '拍照' }}</view>
+              <view>或</view>
+              <view class="zui-icon zui-icon-album"/>
+              <view style="margin-right: 0">选择照片</view>
+            </view>
+          </view>
+          <image
+            wx:if="{{ message.value }}"
+            src="{{ message.formatedValue }}"
+            mode="aspectFit"
+            style="width: 60px; height: 60px;"
+          ></image>
+        </view>
+      </block>
+      <!-- 时间、日期留言 -->
+      <block wx:elif="{{ message.type == 'date' || message.type == 'time' }}">
+        <picker
+          class="zui-cell__bd"
+          mode="{{ message.type }}"
+          value="{{ message.value }}"
+          data-index="{{ index }}"
+          placeholder="选择时间"
+          bindchange="handleMessageValueChange"
+        >
+          <view style="height: 26px;">{{ message.value || '' }}</view>
+        </picker>
+      </block>
+      <!-- 身份证留言 -->
+      <block wx:elif="{{ message.type == 'id_no' }}">
+        <input
+          class="zui-cell__bd zui-form__input"
+          type="idcard"
+          data-index="{{ index }}"
+          bindchange="handleMessageValueChange"
+          placeholder="点击填写身份证"
+        ></input>
+      </block>
+      <!-- 数字格式留言 -->
+      <block wx:elif="{{ message.type == 'tel' }}">
+        <input
+          class="zui-cell__bd zui-form__input"
+          type="number"
+          data-index="{{ index }}"
+          bindchange="handleMessageValueChange"
+          placeholder="点击填写手机号"
+        ></input>
+      </block>
+      <!-- 文本、邮件格式留言 -->
+      <block wx:else>
+        <input
+          class="zui-cell__bd zui-form__input"
+          type="text"
+          data-index="{{ index }}"
+          bindchange="handleMessageValueChange"
+          placeholder="点击填写留言"
+        ></input>
+      </block>
+    </view>
+  </block>
+</template>

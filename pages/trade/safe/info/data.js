@@ -1,0 +1,1 @@
+module.exports={stateMap:{'201':'safe-ing','202':'safe-ing','203':'disagree','204':'youzan','205':'fill-address','206':'sended','207':'no-receive','249':'closed','250':'agreed'},btnsMap:{'201':['close'],'202':['close'],'203':['modify','close','youzan'],'204':['close'],'205':['close'],'206':[],'207':['close','youzan'],'249':[],'250':['order']}};

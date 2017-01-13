@@ -1,0 +1,1 @@
+@import "wxss/list.wxss";@import "wxss/edit.wxss";page{background-color:#f8f8f8}.address{font-size:14px}

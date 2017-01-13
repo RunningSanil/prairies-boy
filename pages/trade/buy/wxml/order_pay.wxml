@@ -1,0 +1,11 @@
+<template name="order_pay">
+  <view class="zui-panel order-pay">
+    <view class="order-pay__container zui-pull-right">
+      <text class="zui-c-gray-darker">合计：</text>
+      <text class="order-pay__price zui-font-16">￥{{ payment_strs.realPayStr }}</text>
+      <button class="order-pay__btn zui-btn zui-btn--danger" catchtap="onPayClick">
+        {{order_no ? '去支付' : '提交订单'}}
+      </button>
+    </view>
+  </view>
+</template>

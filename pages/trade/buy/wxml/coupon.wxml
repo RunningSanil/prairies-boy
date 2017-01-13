@@ -1,0 +1,91 @@
+<template name="coupon">
+  <!-- 订单页外部展示条 -->
+  <view
+    class="zui-cell zui-cell--last-child order-panel zui-panel {{ order_no ? '' : 'zui-cell--access' }}"
+    wx:if="{{ !(order_no && !coupons.selected.id) }}"
+    catchtap="showCouponList"
+  >
+    <text class="zui-cell__bd">优惠</text>
+    <view class="zui-cell__ft zui-c-gray-darker">
+      <block wx:if="{{ !coupons.selected.id }}">
+        <text>使用优惠</text>
+      </block>
+
+      <block wx:if="{{ coupons.selected.id }}">
+        <view>{{ coupons.selected.name }}</view>
+        <view>{{ coupons.selected.condition }}</view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 优惠券弹出层 -->
+  <view class="zui-dialog {{ coupons.showCouponList ? 'zui-dialog--show ' : '' }} order-dialog coupon-dialog">
+    <view class="zui-dialog__mask" catchtap="hideCouponList"></view>
+    <view class="zui-dialog__container">
+      <view class="zui-dialog__header order-dialog__header">
+        <text>选择优惠</text>
+      </view>
+      <view class="order-dialog__content coupon-dialog__content">
+
+        <view class="coupon-dialog__item zui-cell">
+          <view class="zui-cell__bd">
+            <input
+              class="coupon-dialog__input"
+              type="text"
+              maxlength="20"
+              placeholder="请输入优惠码"
+              value="{{ coupons.code }}"
+              bindblur="onCouponCodeInput"
+              bindfocus="onCouponCodeFocus"
+            />
+            <button class="coupon-dialog__valid-code zui-btn zui-btn--small" catchtap="verifyCouponCode">
+              兑换
+            </button>
+            <view wx:if="{{ coupons.error }}" class="coupon-dialog__error zui-ellipsis zui-c-red">
+              {{ coupons.error }}
+            </view>
+          </view>
+        </view>
+
+        <view class="coupon-dialog__coupons-list">
+          <block
+            class=""
+            wx:for="{{ coupons.list }}" wx:for-item="coupon" wx:key="index"
+          >
+            <view
+              class="coupon-dialog__item zui-cell {{ coupons.list.length - 1 == index ? 'zui-cell--last-child' : '' }}"
+              data-couponid="{{ coupon.id }}"
+              catchtap="chooseCoupon"
+            >
+              <icon
+                class="coupon-dialog__check"
+                wx:if="{{ coupon.id == coupons.tmp_selected.id }}"
+                type="success"
+                size="18"
+                color="#f44"
+              />
+              <icon
+                class="coupon-dialog__check"
+                wx:else
+                type="circle"
+                size="18"
+                color=""
+              />
+              <view class="zui-cell__bd">
+                <view>{{ coupon.name}}</view>
+                <view class="zui-font-12 zui-c-gray-darker">{{coupon.condition}}</view>
+              </view>
+
+            </view>
+          </block>
+        </view>
+
+      </view>
+      <view class="order-dialog__action">
+        <button class="order-dialog__action-btn zui-btn zui-btn--last-child" catchtap="hideCouponList">取消</button>
+        <button class="order-dialog__action-btn zui-btn zui-btn--danger zui-btn--last-child" catchtap="confirmCouponChoose">确定</button>
+      </view>
+    </view>
+  </view>
+
+</template>

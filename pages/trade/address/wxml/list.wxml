@@ -1,0 +1,39 @@
+<template name="list">
+  <view wx:if="{{ list.length > 0 }}" class="address__list">
+    <view wx:for="{{ list }}" wx:for-item="item" wx:key="id"
+      class="address__item zui-cell {{ index == list.length -1 ? 'zui-cell--last-child' : '' }}"
+      bindtap="onAddressItemClick"
+      data-addressid="{{ item.id }}"
+    >
+      <view class="zui-cell__bd">
+        <icon
+          wx:if="{{ item.id == selected.id }}"
+          class="address-item__check"
+          type="success"
+          size="18"
+          color="#f44"
+        />
+        <icon
+          wx:else
+          class="address-item__check"
+          type="circle"
+          size="18"
+        />
+        <view>{{ item.user_name }}, {{ item.tel }}</view>
+        <view class="addess-item__detail zui-font-12 zui-c-gray-darker">
+          收货地址：{{ item.province || '' }}{{ item.city || '' }}{{ item.county || '' }} {{ item.address_detail || '' }}
+        </view>
+        <view class="address-item__edit" data-id="{{ item.id }}" catchtap="onEditClick"></view>
+      </view>
+
+    </view>
+  </view>
+  <view wx:else class="address__list--empty">
+    哎呀，你还没有收货地址哦~
+  </view>
+
+  <view class="address__add zui-panel" catchtap="onAddClick">
+    <text>新增收货地址</text>
+    <view class="zui-arrow"></view>
+  </view>
+</template>

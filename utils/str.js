@@ -1,0 +1,1 @@
+module.exports={makeRandomString(a){var b='',c='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';a=a||10;for(var d=0;d<a;d++)b+=c.charAt(Math.floor(Math.random()*c.length));return b}};

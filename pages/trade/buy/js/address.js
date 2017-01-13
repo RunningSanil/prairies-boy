@@ -1,0 +1,1 @@
+var app=getApp();module.exports={onAddressTap(){if(!this.data.order_no){var a=app.db.set(this.data.address);wx.navigateTo({url:'../address/index?address='+a})}}};

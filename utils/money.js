@@ -1,0 +1,1 @@
+var extend=require('./extend.js');function Money(a){this.money=a}Money.prototype=extend(Money.prototype,{toCent(){return parseInt(Math.round(100*this.money),10)||0},toYuan(){return this.adjustFixed(parseFloat(this.money/100)||0,2)},adjustFixed(a,b){return(Math.round(a*Math.pow(10,b))/Math.pow(10,b)).toFixed(b)}}),module.exports=function(a){return new Money(a)};

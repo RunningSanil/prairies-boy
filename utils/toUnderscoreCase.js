@@ -1,0 +1,1 @@
+var each=require('./each');function toUnderscoreCase(a){return a.replace(/[A-Z]/g,b=>{return'_'+b.toLowerCase()})}module.exports=function(a){if('string'==typeof a)return toUnderscoreCase(a);if('object'==typeof a){var b={};return each(a,(c,d)=>{b[toUnderscoreCase(d)]=c}),b}};

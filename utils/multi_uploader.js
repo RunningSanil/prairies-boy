@@ -1,0 +1,1 @@
+var upload=require('./upload');module.exports=function(a,b={}){uploadImg(a.slice(0),b)};function uploadImg(a=[],b={}){if(!(0>=a.length)){var c=a.shift();upload({file:c.src,success:d=>{b.afterUploadSuccess&&b.afterUploadSuccess(d.attachment_full_url,c),uploadImg(a,b)},fail:()=>{b.afterUploadFail&&b.afterUploadFail(c),uploadImg(a,b)}})}}

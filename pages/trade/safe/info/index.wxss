@@ -1,0 +1,1 @@
+@import "../../templates/order_dialog/index.wxss";@import "/templates/multi_image_upload/index.wxss";@import "wxss/top.wxss";@import "wxss/info.wxss";.safe-row{padding:4px 0;line-height:1.4;font-size:14px}

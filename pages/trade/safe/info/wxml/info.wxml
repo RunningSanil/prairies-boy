@@ -1,0 +1,100 @@
+<import src="/bower_components/zui/dist/tab/index.wxml" />
+
+<template name="safe-info">
+  <view class="zui-panel {{ tab.selectedId == 1 ? '' : 'safe-panel--no-border-bottom' }}">
+    <template is="zui-tab" data="{{tab: tab, componentId: 'tab'}}"></template>
+
+    <template wx:if="{{ tab.selectedId == 1 }}" is="info" data="{{ safe_no, safe, goods }}"></template>
+    <template wx:else is="chat" data="{{ log }}"></template>
+
+  </view>
+</template>
+
+<template name="chat">
+  <view class="safe-chat">
+    <block wx:for="{{ log }}" wx:key="id" wx:for-item="logItem">
+      <view class="safe-chat__time zui-c-gray-dark zui-center">{{ logItem.add_time }}</view>
+      <view class="zui-chat {{ logItem.explain_detail.who == '买家' ? 'zui-chat--light zui-chat--right' : 'zui-chat--dark zui-chat--left' }}">
+        <view class="zui-chat__detail">
+          <view
+            wx:if="{{ logItem.explain_detail.state_str }}"
+            class="zui-chat__hd {{ logItem.explain_detail.detail.length > 0 || logItem.ext_info.length > 0 ? '' : 'zui-chat__hd--no-border' }}"
+          >{{ logItem.explain_detail.state_str }}</view>
+          <view
+            wx:if="{{ logItem.explain_detail.detail.length > 0 || logItem.ext_info.length > 0 }}"
+            class="zui-chat__bd"
+          >
+            <view wx:for="{{ logItem.explain_detail.detail }}" wx:for-item="explainItem" wx:key="unique" class="zui-chat__row">
+              <view class="zui-chat__label">{{ explainItem.title }}：</view>
+              <view class="zui-chat__content">{{ explainItem.str }}</view>
+            </view>
+            <view wx:if="{{ logItem.ext_info.length > 0 }}" class="zui-chat__row">
+              <view class="zui-chat__label">图片举证：</view>
+              <view class="zui-chat__content">
+                <image
+                  wx:for="{{ logItem.ext_info }}" wx:for-item="pictureData" wx:key="src"
+                  class="zui-pull-left"
+                  src="{{ pictureData.srcPreview }}"
+                  mode="aspectFit"
+                  data-src="{{ pictureData.src }}"
+                  catchtap="showPicture"
+                  style="width: 60px; height: 60px; margin-right: 10px; margin-bottom: 10px;"
+                />
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="zui-chat__arrow"></view>
+      </view>
+    </block>
+  </view>
+</template>
+
+<template name="info">
+  <view class="info">
+    <view class="safe-row">
+      <text class="zui-c-black">退款编号：</text>
+      <text class="zui-pull-right zui-c-gray-darker">{{ safe_no }}</text>
+    </view>
+    <view class="safe-row">
+      <text class="zui-c-black">申请时间：</text>
+      <text class="zui-pull-right zui-c-gray-darker">{{ safe.add_time }}</text>
+    </view>
+    <view class="safe-row">
+      <text class="zui-c-black">退款原因：</text>
+      <text class="zui-pull-right zui-c-gray-darker">{{ safe.safe_reason_str }}</text>
+    </view>
+    <view class="safe-row">
+      <text class="zui-c-black">处理方式：</text>
+      <text class="zui-pull-right zui-c-gray-darker">{{ safe.safe_type_str }}</text>
+    </view>
+    <view class="safe-row">
+      <text class="zui-c-black">退款金额：</text>
+      <text class="zui-pull-right zui-c-red">￥{{ safe.refund_fee }}</text>
+    </view>
+  </view>
+
+  <view class="info-goods">
+    <view class="info-goods__namecard zui-card">
+      <view class="zui-card__thumb">
+        <image class="zui-card__img" src="{{ goods.imgPreview }}" mode="aspectFit"></image>
+      </view>
+      <view class="zui-card__detail">
+        <view class="zui-card__detail-row">
+          <view class="zui-card__right-col">¥ {{ goods.payPriceStr }}</view>
+          <view class="zui-card__left-col zui-ellipsis--l2">{{ goods.title }}</view>
+        </view>
+
+        <view class="zui-card__detail-row zui-c-gray-darker">
+          <view class="zui-card__right-col">x{{ goods.num }}</view>
+          <view class="zui-card__left-col">{{ goods.skuStr }}</view>
+        </view>
+
+        <view class="zui-card__detail-row zui-c-gray-darker">
+          <view class="zui-card__left-col zui-c-red">{{ goods.orderStateStr }}</view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+</template>

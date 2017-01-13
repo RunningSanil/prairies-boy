@@ -1,0 +1,140 @@
+<import src="/templates/copyright.wxml" />
+<import src="/bower_components/zui/dist/toast/index.wxml"/>
+
+<view class="container container--with-copyright">
+  <block wx:if="{{ !fetching }}">
+    <!-- 维权信息简介 -->
+    <view class="apply-detail zui-panel zui-panel--without-margin-top">
+      <view class="apply-detail__row">
+        <text class="zui-pull-left">商品名称:</text>
+        <view class="apply-detail__content zui-right zui-ellipsis">{{ goods_title }}</view>
+      </view>
+
+      <view class="apply-detail__row">
+        <text class="zui-pull-left">付款金额:</text>
+        <view class="apply-detail__content zui-right zui-c-red">￥ {{ real_pay }}</view>
+      </view>
+
+      <view class="apply-detail__row">
+        <text class="zui-pull-left">订单编号:</text>
+        <view class="apply-detail__content zui-right">{{ order_no }}</view>
+      </view>
+
+      <view class="apply-detail__row">
+        <text class="zui-pull-left">交易时间:</text>
+        <view class="apply-detail__content zui-right">{{ pay_time }}</view>
+      </view>
+    </view>
+
+    <!-- 表单内容 -->
+    <view class="zui-panel">
+      <view class="zui-cell zui-form__item">
+        <view class="zui-form__title">
+          处理方式
+        </view>
+        <view class="zui-form__input zui-cell__bd">
+          <picker mode="selector" value="{{ methodIndex }}" range="{{ methods }}" range-key="text" bindchange="bindMethodChange">
+            <view class="">{{ methods[methodIndex].text }}</view>
+          </picker>
+        </view>
+        <view class="zui-arrow"></view>
+      </view>
+
+      <!-- 只有仅退款需要知道货物状态，退货退款的默认为已收到货了 -->
+      <view wx:if="{{ method == 1 }}" class="zui-cell zui-form__item">
+        <view class="zui-form__title">
+          货物状态
+        </view>
+        <view class="zui-form__input zui-cell__bd">
+          <picker mode="selector" value="{{ expressIndex }}" range="{{ expressList }}" range-key="text" bindchange="bindExpressChange">
+            <view class="">{{ expressList[expressIndex].text }}</view>
+          </picker>
+        </view>
+        <view class="zui-arrow"></view>
+      </view>
+
+      <view class="zui-cell zui-form__item">
+        <view class="zui-form__title">
+          退款原因
+        </view>
+        <view class="zui-form__input zui-cell__bd">
+          <picker mode="selector" value="{{ reasonIndex }}" range="{{ reasons }}" range-key="text" bindchange="bindReasonChange">
+            <view class="">{{ reasons[reasonIndex].text }}</view>
+          </picker>
+        </view>
+        <view class="zui-arrow"></view>
+      </view>
+
+      <view class="zui-cell zui-form__item">
+        <view class="zui-form__title">
+          退款金额
+        </view>
+        <view class="zui-form__input zui-cell__bd">
+          <input
+            type="digit"
+            maxlength="20"
+            placeholder="最多可退{{ real_pay }}元"
+            bindblur="onMoneyChange"
+            value="{{ moneyStr }}"
+            disabled="{{ is_full_refund ? 'disabled' : '' }}"
+          />
+        </view>
+      </view>
+
+      <view class="zui-cell zui-form__item">
+        <view class="zui-form__title">
+          手机号码
+        </view>
+        <view class="zui-form__input zui-cell__bd">
+          <input type="number" maxlength="20" placeholder="便于卖家联系您" bindblur="onPhoneChange" value="{{ phone }}" />
+        </view>
+      </view>
+
+      <view class="zui-cell zui-form__item">
+        <view class="zui-form__title--top zui-form__title">
+          备注信息
+        </view>
+        <view class="zui-cell__bd zui-form__textarea">
+          <textarea auto-height maxlength="200" placeholder="最多可填写200字" bindblur="onMessageChange" value="{{ message }}"/>
+        </view>
+      </view>
+
+      <view class="zui-cell zui-form__item zui-cell--last-child">
+        <view class="multi-upload__title zui-form__title">
+          图片举证
+        </view>
+        <view class="zui-cell__bd zui-form__input">
+          <view wx:if="{{ imgs.length == 0 }}" class="zui-c-gray-dark">可上传{{ MAX_PICTURES }}张图片</view>
+          <view wx:else class="zui-c-gray-dark">还能上传{{ MAX_PICTURES - imgs.length }}张图片</view>
+          <view>
+            <view
+              wx:for="{{ imgs }}" wx:key="key" wx:for-item="imgData"
+              class="multi-upload__img-contain {{ imgData.uploading ? 'multi-upload__img-contain--loading' : '' }}"
+            >
+              <image class="multi-upload__img" src="{{ imgData.srcPreview }}" mode="aspectFit"></image>
+              <icon
+                class="multi-upload__clear"
+                data-key="{{ imgData.key }}"
+                type="clear" size="16" color="black"
+                catchtap="onImageDelete"
+              />
+            </view>
+
+            <view wx:if="{{ imgs.length < MAX_PICTURES }}" class="multi-upload__img-contain multi-upload__img-add" catchtap="onImageAdd">
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="zui-btns">
+      <button class="zui-btn zui-btn--danger" catchtap="onSubmitClick">提交</button>
+    </view>
+  </block>
+
+</view>
+
+<template is="zui-toast" data="{{ zuiToast }}" />
+<template is="copyright" />

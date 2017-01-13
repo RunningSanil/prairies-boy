@@ -1,0 +1,16 @@
+{
+  "name": "wsc",
+  "version": "0.9.6",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "zui": "git@gitlab.qima-inc.com:weapp/zui.git#v1.1.0"
+  }
+}

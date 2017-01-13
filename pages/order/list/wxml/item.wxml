@@ -1,0 +1,109 @@
+<template name="item">
+  <view
+    class="order-item zui-panel"
+    wx:for="{{ list }}" wx:for-item="item" wx:key="order_no"
+    data-orderno="{{ item.order_no }}"
+    data-state="{{ item.state }}"
+    catchtap="onOrderItemClicked"
+    animation="{{ selectedId == animation.selectedId && item.order_no == animation.order_no ? animation.animationData : '' }}"
+  >
+    <view class="order-item__hd">
+      <view>
+        <text>店铺: {{ item.items[0].shop_info.shop_name }}</text>
+        <text class="zui-pull-right zui-c-red">{{ item.state_str }}</text>
+      </view>
+      <view class="zui-c-gray-dark zui-font-12">订单编号：{{ item.order_no }}</view>
+    </view>
+
+    <!-- 商品内容 -->
+    <view class="order-item__bd goods-card goods-card--first zui-card">
+      <view class="zui-card__thumb">
+        <image class="zui-card__img" src="{{ item.items[0].image_url }}" mode="aspectFit"></image>
+      </view>
+      <view class="zui-card__detail">
+        <view class="zui-card__detail-row">
+          <view class="zui-card__right-col">￥{{ item.items[0].pay_price }}</view>
+          <view class="zui-card__left-col zui-ellipsis--l2">
+            {{ item.items[0].title }}
+          </view>
+        </view>
+
+        <view class="zui-card__detail-row zui-c-gray-darker">
+          <view class="zui-card__right-col">x{{ item.items[0].num }}</view>
+          <view class="zui-card__left-col goods-card__detail-sku">
+            {{ item.items[0].skuStr }}
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+    <view wx:if="{{ item.items.length > 1 }}" class="order-item__extra-row zui-cell">
+      <view class="zui-center zui-cell__bd">
+        查看全部{{ item.items.length }}件商品
+      </view>
+    </view>
+
+    <!-- 价格区域 -->
+    <view
+      class="order-item__extra-row zui-cell {{ item.btns.length > 0 ? '' : 'zui-cell--last-child' }}"
+    >
+      <view class="zui-cell__bd zui-right">
+        <text>合计：</text>
+        <text class="zui-c-red">￥{{ item.real_pay }}</text>
+      </view>
+    </view>
+
+    <!-- 按钮区域 -->
+    <view
+      wx:if="{{ item.btns.length > 0 }}"
+      class="order-item__extra-row zui-cell zui-cell--last-child"
+    >
+      <view class="order-item__actions zui-cell__bd zui-right">
+        <block wx:for="{{ item.btns }}" wx:key="index" wx:for-item="btn">
+          <button
+            wx:if="{{ btn == 'transport' }}"
+            class="order-item__action zui-btn zui-btn--small zui-btn--plain"
+            data-orderno="{{ item.order_no }}"
+            catchtap="showOrderExpress"
+          >
+            查看物流
+          </button>
+          <button
+            wx:if="{{ btn == 'cancel' }}"
+            class="order-item__action zui-btn zui-btn--small zui-btn--plain"
+            data-orderno="{{ item.order_no }}"
+            catchtap="onCancelOrder"
+          >
+            取消订单
+          </button>
+          <button
+            wx:if="{{ btn == 'topay' }}"
+            class="order-item__action zui-btn zui-btn--danger zui-btn--small zui-btn--plain"
+            data-orderno="{{ item.order_no }}"
+            catchtap="onPayClick"
+          >
+            确认付款
+          </button>
+          <button
+            wx:if="{{ btn == 'confirmReceive' }}"
+            class="order-item__action zui-btn zui-btn--danger zui-btn--small zui-btn--plain"
+            data-orderno="{{ item.order_no }}"
+            catchtap="onConfirmReceiveClick"
+          >
+            确认收货
+          </button>
+          <button
+            wx:if="{{ btn == 'laterReceive' }}"
+            class="order-item__action zui-btn zui-btn--small zui-btn--plain"
+            data-orderno="{{ item.order_no }}"
+            catchtap="onLaterReceiveClick"
+          >
+            延长收货
+          </button>
+        </block>
+      </view>
+    </view>
+
+  </view>
+</template>

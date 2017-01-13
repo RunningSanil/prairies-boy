@@ -1,0 +1,63 @@
+<import src="/templates/banner.wxml" />
+<import src="/templates/copyright.wxml" />
+
+<view class="container container--without-border container--with-copyright">
+
+  <template is="banner" data="{{ title: userInfo.nickName, logo: userInfo.avatarUrl, isUserCenter: true }}"/>
+
+  <view class="zui-panel">
+    <navigator class="zui-cell zui-cell--access" url="/pages/order/list/index" hover-class="none">
+      <view class="zui-cell__bd">我的订单</view>
+      <view class="zui-cell__ft zui-font-12">查看全部订单</view>
+    </navigator>
+    <view>
+      <view class="state-list">
+        <navigator class="state-list__item" url="/pages/order/list/index?type=topay&count={{ topay }}" hover-class="none">
+          <view class="state-list__icon zui-badge">
+            <view class="zui-icon zui-icon-topay" />
+            <view wx:if="{{topay != 0}}" class="zui-badge__count">{{topay}}</view>
+          </view>
+          待付款
+        </navigator>
+        <navigator class="state-list__item" url="/pages/order/list/index?type=tosend&count={{ tosend }}" hover-class="none">
+          <view class="state-list__icon zui-badge">
+            <view class="zui-icon zui-icon-tosend" />
+            <view wx:if="{{tosend != 0}}" class="zui-badge__count">{{tosend}}</view>
+          </view>
+          待发货
+        </navigator>
+        <navigator class="state-list__item" url="/pages/order/list/index?type=send&count={{ send }}" hover-class="none">
+          <view class="state-list__icon zui-badge">
+            <view class="zui-icon zui-icon-send" />
+            <view  wx:if="{{send != 0}}" class="zui-badge__count">{{send}}</view>
+          </view>
+          待收货
+        </navigator>
+        <navigator class="state-list__item" url="/pages/order/list/index?type=sign&count=0" hover-class="none">
+          <view class="state-list__icon">
+            <view class="zui-icon zui-icon-sign" />
+          </view>
+          已完成
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+  <view class="zui-panel" wx:if="{{ isSetShoppingCart }}">
+    <navigator class="zui-cell zui-cell--last-child" url="/pages/goods/cart/index">
+      <view class="zui-cell__bd">购物车</view>
+      <view class="zui-cell__ft">
+        <view wx:if="{{ cartCount > 0 }}" class="cart-count">{{ cartCount }}</view>
+      </view>
+    </navigator>
+  </view>
+
+  <view class="zui-panel" wx:if="{{ servicePhoneNumber }}">
+    <view class="zui-cell zui-cell--access zui-cell--last-child" bindtap="handleContactCustomerService">
+      <view class="zui-cell__bd">联系客服</view>
+      <view class="zui-cell__ft"></view>
+    </view>
+  </view>
+</view>
+
+<template is="copyright" />

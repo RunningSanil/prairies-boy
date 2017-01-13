@@ -1,0 +1,115 @@
+<template name="shop">
+  <view class="shop zui-panel">
+    <view class="shop__shopname zui-c-black">{{ shop.shopName }}</view>
+    <block wx:for="{{ goods_list }}" wx:for-item="goods_item" wx:key="index">
+      <view class="goods-card zui-card {{index == 0 ? 'goods-card--first' : ''}}">
+        <view class="zui-card__thumb">
+          <view
+            wx:if="{{ goods_item.isPresent }}"
+            class="goods-card__present-icon"
+          ></view>
+          <image class="zui-card__img" src="{{ goods_item.imgUrl }}" mode="aspectFit"></image>
+        </view>
+        <view class="zui-card__detail">
+          <view class="zui-card__detail-row">
+            <view class="zui-card__right-col">
+              ￥{{ goods_item.payPriceStr }}
+            </view>
+            <view class="zui-card__left-col zui-ellipsis--l2">
+              {{ goods_item.title }}
+            </view>
+          </view>
+
+          <view class="zui-card__detail-row zui-c-gray-darker">
+            <view class="zui-card__right-col">x{{ goods_item.num }}</view>
+            <view class="zui-card__left-col goods-card__detail-sku">
+              {{ goods_item.skuStr }}
+            </view>
+          </view>
+
+          <view wx:if="{{ goods_item.message.length != 0 }}" class="zui-card__detail-row zui-c-gray-darker">
+            <view class="zui-card__right-col">
+              <view
+                class="zui-btn zui-btn--mini zui-btn--last-child"
+                data-goodsid="{{ goods_item.goodsId }}"
+                data-skuid="{{ goods_item.skuId }}"
+                catchtap="showGoodsMessage"
+              >查看留言</view>
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </block>
+
+    <view wx:if="{{ goods_list.length == 0 }}" class="shop__empty-block">
+      <view class="shop__empty-icon"></view>
+      <view class="shop__empty-tips">哎呀，当前没有可购买的商品哦~</view>
+      <button class="shop__empty-btn zui-btn zui-btn--small" catchtap="doReselectGoods">重新选择</button>
+    </view>
+
+    <view wx:if="{{ shop.umpActivity.length > 0 && goods_list.length > 0 }}" class="zui-cell order-panel zui-cell--access" catchtap="showShopActivity">
+      <text class="zui-cell__bd">店铺活动</text>
+      <view class="zui-cell__ft zui-c-gray-darker">
+        <text>{{ shop.umpActivity[0] }} {{ shop.umpActivity.length > 1 ? '等' : '' }}</text>
+      </view>
+    </view>
+
+    <!-- 可购买商品不为0 并且非虚拟商品 才要显示配送方式 -->
+    <view wx:if="{{ goods_list.length > 0 && !is_virtual }}" class="zui-cell order-panel">
+      <text class="zui-cell__bd">配送方式</text>
+      <view class="zui-cell__ft zui-c-gray-darker">
+        <block wx:if="{{ shop.postage > 0 }}">
+          <view>￥{{ shop.postageStr }}</view>
+          <view>快递发货</view>
+        </block>
+        <block wx:else>
+          <view>免运费</view>
+        </block>
+
+      </view>
+    </view>
+
+    <!-- 可购买数量不为为0的时候显示留言 && !(下了订单，且订单里留言为空时，不显示留言) -->
+    <view wx:if="{{ goods_list.length > 0 && !(order_no && !shop.buyer_msg) }}" class="zui-cell order-panel shop__message">
+      <text class="zui-form__title zui-c-black">留言</text>
+      <view class="zui-cell__bd zui-form__input">
+        <input
+          bindblur="onMessageBlur"
+          placeholder="点击给商家留言"
+          auto-height="true"
+          value="{{ shop.buyer_msg }}"
+          disabled="{{ order_no ? true : false }}"
+        />
+      </view>
+    </view>
+
+    <view wx:if="{{ goods_list.length > 0 }}" class="zui-cell order-panel zui-cell--last-child">
+      <text class="zui-cell__bd">合计</text>
+      <view class="zui-cell__ft zui-c-red">
+        <text>￥{{ shop.itemPayStr }}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="zui-dialog {{ shop.showActivityDetail ? 'zui-dialog--show ' : '' }} order-dialog">
+    <view class="zui-dialog__mask" catchtap="hideShopActivity"></view>
+    <view class="zui-dialog__container">
+      <view class="zui-dialog__header order-dialog__header">
+        <text>店铺活动</text>
+      </view>
+      <view class="order-dialog__content ump-dialog__content">
+        <view class="ump-dialog__list">
+          <view
+            wx:for="{{ shop.umpActivity }}" wx:for-item="item" wx:key="index"
+            class="zui-cell {{ shop.umpActivity.length == index + 1 ? 'zui-cell--last-child' : '' }}"
+          >
+            {{ item }}
+          </view>
+        </view>
+      </view>
+      <button catchtap="hideShopActivity" class="zui-btn zui-btn--danger zui-btn--last-child">关闭</button>
+    </view>
+  </view>
+
+</template>

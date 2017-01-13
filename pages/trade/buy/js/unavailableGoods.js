@@ -1,0 +1,1 @@
+module.exports={showUnavailableDetail(){var a=this.data.unavailable_goods;a.showDetail=!0,this.setData({unavailable_goods:a})},hideUnavailableDetail(){var a=this.data.unavailable_goods;a.showDetail=!1,this.setData({unavailable_goods:a})}};
