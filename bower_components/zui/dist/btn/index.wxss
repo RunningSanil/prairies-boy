@@ -38,7 +38,7 @@
 
 .zui-btn--danger {
     color: #fff;
-    background-color: #f44;
+    background-color: #4b4;
     border-color: #e33
 }
 

@@ -197,6 +197,7 @@
         <view class="buttons-flex">
           <template is="home-button" data="{{ border: isSetShoppingCart }}" />
           <navigator
+            open-type="switchTab"
             wx:if="{{ isSetShoppingCart }}"
             class="shopping-cart {{ cartCount ? 'shopping-cart--has-goods' : '' }}"
             url="/pages/goods/cart/index">

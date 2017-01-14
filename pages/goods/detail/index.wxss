@@ -85,7 +85,7 @@
     display: inline-block;
     background: #fff;
     border-radius: 2px;
-    color: #f44;
+    color: #4b4;
     min-width: 16px;
     min-height: 16px;
     text-align: center;
@@ -161,7 +161,7 @@
 
 .buy-now__tips {
     background: rgba(255,247,204,.95);
-    color: #f44;
+    color: #4b4;
     font-size: 12px;
     height: 35px;
     line-height: 35px;
