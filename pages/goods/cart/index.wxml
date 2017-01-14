@@ -15,7 +15,7 @@
       <view class="cart {{ editMode ? 'cart--edit-model' : '' }}">
         <view class="cart__hd">
           <view class="checkbox" bindtap="handleCheckedAllTap">
-            <view wx:if="{{ checkedAll }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #ff4343; font-size: 18px;"></view>
+            <view wx:if="{{ checkedAll }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #44b549; font-size: 18px;"></view>
             <view wx:else class="checkbox-icon zui-icon zui-icon-check" style="color: #999; font-size: 18px;"></view>
           </view>
           <view class="shop-name zui-ellipsis">
@@ -38,7 +38,7 @@
           >
             <view class="cart__item-bd {{ move.translate && move.unique === goods.unique ? 'cart__item-bd--translate' : '' }}">
               <view class="checkbox" bindtap="handleCheckedGoodsTap" data-goods-unique="{{ goods.unique }}">
-                <view wx:if="{{ goods.checked }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #ff4343; font-size: 18px;"></view>
+                <view wx:if="{{ goods.checked }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #44b549; font-size: 18px;"></view>
                 <view wx:else class="checkbox-icon zui-icon zui-icon-check" style="color: #999; font-size: 18px;"></view>
               </view>
               <view class="cart__goods">
@@ -125,7 +125,7 @@
     <view class="bottom-fixed zui-clearfix">
       <view class="bottom-checked-all zui-clearfix" bindtap="handleCheckedAllTap">
         <view class="checkbox" style="height: 50px;">
-          <view wx:if="{{ checkedAll }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #ff4343; font-size: 18px;"></view>
+          <view wx:if="{{ checkedAll }}" class="checkbox-icon zui-icon zui-icon-checked" style="color: #44b549; font-size: 18px;"></view>
           <view wx:else class="checkbox-icon zui-icon zui-icon-check" style="color: #999; font-size: 18px;"></view>
         </view>
         <view class="bottom-checked-all__text">全选</view>
