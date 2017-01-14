@@ -1,1 +1,31 @@
-.zui-dialog__mask{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1;background:rgba(0,0,0,.7);display:none}.zui-dialog__container{position:fixed;bottom:0;width:750rpx;background:#fff;-webkit-transform:translateY(150%);transform:translateY(150%);-webkit-transition:all .4s ease;transition:all .4s ease;z-index:2}.zui-dialog--show .zui-dialog__container{-webkit-transform:translateY(0);transform:translateY(0)}.zui-dialog--show .zui-dialog__mask{display:block}
+.zui-dialog__mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: rgba(0,0,0,.7);
+    display: none
+}
+
+.zui-dialog__container {
+    position: fixed;
+    bottom: 0;
+    width: 750rpx;
+    background: #fff;
+    -webkit-transform: translateY(150%);
+    transform: translateY(150%);
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease;
+    z-index: 2
+}
+
+.zui-dialog--show .zui-dialog__container {
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+}
+
+.zui-dialog--show .zui-dialog__mask {
+    display: block
+}

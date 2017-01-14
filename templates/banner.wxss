@@ -1,1 +1,30 @@
-.banner{position:relative;width:750rpx;height:345rpx;background:#44b549;color:#fff;overflow:hidden}.banner__logo{display:block;margin:63rpx auto 0;width:161rpx;height:161rpx;border:4rpx solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.15)}.banner__title{text-align:center;font-size:14px;padding:29rpx}.banner--usercenter{background:#fff;color:#333;border-bottom:1rpx solid #e5e5e5}
+.banner {
+    position: relative;
+    width: 750rpx;
+    height: 345rpx;
+    background: #44b549;
+    color: #fff;
+    overflow: hidden
+}
+
+.banner__logo {
+    display: block;
+    margin: 63rpx auto 0;
+    width: 161rpx;
+    height: 161rpx;
+    border: 4rpx solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15)
+}
+
+.banner__title {
+    text-align: center;
+    font-size: 14px;
+    padding: 29rpx
+}
+
+.banner--usercenter {
+    background: #fff;
+    color: #333;
+    border-bottom: 1rpx solid #e5e5e5
+}
