@@ -32,13 +32,13 @@
 
 .zui-btn--warn {
     color: #fff;
-    background-color: #f85;
-    border-color: #f85
+    background-color: #5c1;
+    border-color: #5c1
 }
 
 .zui-btn--danger {
     color: #fff;
-    background-color: #f44;
+    background-color: #4b4;
     border-color: #e33
 }
 

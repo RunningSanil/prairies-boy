@@ -107,7 +107,7 @@
 
 .goods__price {
     font-size: 14px;
-    color: #f44
+    color: #4b4
 }
 
 .goods__error-msg,.goods__price {
