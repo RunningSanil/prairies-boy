@@ -25,14 +25,19 @@
   },
   "tabBar": {
     "color": "#606060",
-    "selectedColor": "#FF4444",
+    "selectedColor": "#44b549",
     "backgroundColor": "#FCFCFC",
     "borderStyle": "white",
     "list": [{
       "pagePath": "pages/home/dashboard/index",
-      "text": "首页",
+      "text": "好货",
       "iconPath": "icons/home.png",
       "selectedIconPath": "icons/home-selected.png"
+    }, {
+      "pagePath": "pages/goods/cart/index",
+      "text": "购物车",
+      "iconPath": "icons/goods-cart.png",
+      "selectedIconPath": "icons/goods-cart-selected.png"
     }, {
       "pagePath": "pages/usercenter/dashboard/index",
       "text": "我的",
