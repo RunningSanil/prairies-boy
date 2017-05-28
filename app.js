@@ -84,8 +84,8 @@ Events, {
       data: {
         code: a,
         appId: this.getAppId(),
-        clientId: '4d65249d377b2c3ed8',
-        clientSecret: '1cdc05151d64f3a4a6ebd0e9de64422a',
+        clientId: '8d1453fed58bd64acb',
+        clientSecret: '2bd90d42c4e8ce497b37f4ba183ce653',
         fansType: this.getFansType(),
         grantType: 'yz_union'
       },
